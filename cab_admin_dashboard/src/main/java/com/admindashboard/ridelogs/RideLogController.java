@@ -20,24 +20,17 @@ public class RideLogController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RideLog> getRideById(@PathVariable Long id) {
-        RideLog ride = rideLogService.getRideById(id);
-        return ride != null ? ResponseEntity.ok(ride) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(rideLogService.getRideById(id));
     }
 
-    @GetMapping("/cancelled")
-    public List<RideLog> getCancelledRides() {
-        return rideLogService.getCancelledRides();
-    }
-
-    @GetMapping("/complaints")
-    public List<RideLog> getComplaints() {
-        return rideLogService.getComplaints();
+    @PostMapping
+    public ResponseEntity<RideLog> createRide(@RequestBody RideLog rideLog) {
+        return ResponseEntity.ok(rideLogService.createRide(rideLog));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RideLog> updateRide(@PathVariable Long id, @RequestBody RideLog ride) {
-        RideLog updated = rideLogService.updateRide(id, ride);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    public ResponseEntity<RideLog> updateRide(@PathVariable Long id, @RequestBody RideLog rideLog) {
+        return ResponseEntity.ok(rideLogService.updateRide(id, rideLog));
     }
 
     @DeleteMapping("/{id}")

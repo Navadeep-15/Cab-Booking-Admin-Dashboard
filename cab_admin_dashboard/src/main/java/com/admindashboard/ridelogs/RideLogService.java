@@ -16,26 +16,36 @@ public class RideLogService {
     }
 
     public RideLog getRideById(Long id) {
-        return rideLogRepository.findById(id).orElse(null);
+        return rideLogRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ride not found with ID: " + id));
     }
 
-    public List<RideLog> getCancelledRides() {
-        return rideLogRepository.findByStatus("cancelled");
+    public RideLog createRide(RideLog rideLog) {
+        return rideLogRepository.save(rideLog);
     }
 
-    public List<RideLog> getComplaints() {
-        return rideLogRepository.findByComplaintIsNotNull();
-    }
-
-    public RideLog updateRide(Long id, RideLog ride) {
-        RideLog existing = getRideById(id);
-        if (existing != null) {
-            existing.setStatus(ride.getStatus());
-            existing.setFeedback(ride.getFeedback());
-            existing.setComplaint(ride.getComplaint());
-            return rideLogRepository.save(existing);
-        }
-        return null;
+    public RideLog updateRide(Long id, RideLog updated) {
+        RideLog ride = getRideById(id);
+        ride.setPickupAddress(updated.getPickupAddress());
+        ride.setPickupLatitude(updated.getPickupLatitude());
+        ride.setPickupLongitude(updated.getPickupLongitude());
+        ride.setDestinationAddress(updated.getDestinationAddress());
+        ride.setDestinationLatitude(updated.getDestinationLatitude());
+        ride.setDestinationLongitude(updated.getDestinationLongitude());
+        ride.setStatus(updated.getStatus());
+        ride.setDriverRating(updated.getDriverRating());
+        ride.setDriverFeedback(updated.getDriverFeedback());
+        ride.setCustomerFeedback(updated.getCustomerFeedback());
+        ride.setActualFare(updated.getActualFare());
+        ride.setEstimatedFare(updated.getEstimatedFare());
+        ride.setEstimatedDistance(updated.getEstimatedDistance());
+        ride.setEstimatedDuration(updated.getEstimatedDuration());
+        ride.setRequestedAt(updated.getRequestedAt());
+        ride.setStartedAt(updated.getStartedAt());
+        ride.setCompletedAt(updated.getCompletedAt());
+        ride.setCancelledAt(updated.getCancelledAt());
+        ride.setCancellationReason(updated.getCancellationReason());
+        return rideLogRepository.save(ride);
     }
 
     public void deleteRide(Long id) {

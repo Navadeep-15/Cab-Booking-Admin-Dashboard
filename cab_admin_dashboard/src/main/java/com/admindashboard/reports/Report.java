@@ -4,33 +4,47 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "reports")
+@Table(name = "report")
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long report_id;
+    private Long id;
 
-    private String report_type; // e.g., "complaint", "payment", "performance"
+    @Column(name = "report_type")
+    private String reportType;
+
+    @Column(name = "description")
     private String description;
-    private LocalDateTime generated_at;
+
+    @Column(name = "reported_at")
+    private LocalDateTime reportedAt;
+
+    @Column(name = "ride_id")
+    private Long rideId;
+
+    @Column(name = "reported_by_user_id")
+    private Long reportedByUserId;
+
+    @Column(name = "status")
+    private String status;
 
     // Getters and Setters
 
-    public Long getReport_id() {
-        return report_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setReport_id(Long report_id) {
-        this.report_id = report_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getReport_type() {
-        return report_type;
+    public String getReportType() {
+        return reportType;
     }
 
-    public void setReport_type(String report_type) {
-        this.report_type = report_type;
+    public void setReportType(String reportType) {
+        this.reportType = reportType;
     }
 
     public String getDescription() {
@@ -41,11 +55,35 @@ public class Report {
         this.description = description;
     }
 
-    public LocalDateTime getGenerated_at() {
-        return generated_at;
+    public LocalDateTime getReportedAt() {
+        return reportedAt;
     }
 
-    public void setGenerated_at(LocalDateTime generated_at) {
-        this.generated_at = generated_at;
+    public void setReportedAt(LocalDateTime reportedAt) {
+        this.reportedAt = reportedAt;
+    }
+
+    public Long getRideId() {
+        return rideId;
+    }
+
+    public void setRideId(Long rideId) {
+        this.rideId = rideId;
+    }
+
+    public Long getReportedByUserId() {
+        return reportedByUserId;
+    }
+
+    public void setReportedByUserId(Long reportedByUserId) {
+        this.reportedByUserId = reportedByUserId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

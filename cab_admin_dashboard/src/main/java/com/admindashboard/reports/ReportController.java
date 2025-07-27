@@ -20,18 +20,17 @@ public class ReportController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Report> getReportById(@PathVariable Long id) {
-        Report report = reportService.getReportById(id);
-        return report != null ? ResponseEntity.ok(report) : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/type/{type}")
-    public List<Report> getReportsByType(@PathVariable String type) {
-        return reportService.getReportsByType(type);
+        return ResponseEntity.ok(reportService.getReportById(id));
     }
 
     @PostMapping
     public ResponseEntity<Report> createReport(@RequestBody Report report) {
         return ResponseEntity.ok(reportService.createReport(report));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Report> updateReport(@PathVariable Long id, @RequestBody Report report) {
+        return ResponseEntity.ok(reportService.updateReport(id, report));
     }
 
     @DeleteMapping("/{id}")

@@ -1,11 +1,9 @@
 package com.admindashboard.earnings;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -20,13 +18,24 @@ public class EarningController {
         return earningService.getAllEarnings();
     }
 
-    @GetMapping("/range")
-    public ResponseEntity<Double> getEarningsInRange(
-            @RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
-        
-        List<Earning> earnings = earningService.getEarningsBetween(start, end);
-        Double total = earningService.calculateTotalEarnings(earnings);
-        return ResponseEntity.ok(total);
+    @GetMapping("/{id}")
+    public ResponseEntity<Earning> getEarningById(@PathVariable Long id) {
+        return ResponseEntity.ok(earningService.getEarningById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Earning> createEarning(@RequestBody Earning earning) {
+        return ResponseEntity.ok(earningService.createEarning(earning));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Earning> updateEarning(@PathVariable Long id, @RequestBody Earning earning) {
+        return ResponseEntity.ok(earningService.updateEarning(id, earning));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEarning(@PathVariable Long id) {
+        earningService.deleteEarning(id);
+        return ResponseEntity.noContent().build();
     }
 }

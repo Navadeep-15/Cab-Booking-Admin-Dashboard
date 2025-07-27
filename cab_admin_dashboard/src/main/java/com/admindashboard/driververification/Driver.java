@@ -3,27 +3,37 @@ package com.admindashboard.driververification;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "driver_details")
+@Table(name = "drivers")
 public class Driver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long driver_id;
+    private Long id;
 
     private String name;
-    private String license_number;
-    private String phone_number;
-    private String email;
-    private String status; // pending, approved, rejected
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "license_number")
+    private String licenseNumber;
+
+    @Column(name = "vehicle_number")
+    private String vehicleNumber;
+
+    @Column(name = "vehicle_type")
+    private String vehicleType;
+
+    private String status;
 
     // Getters and Setters
 
-    public Long getDriver_id() {
-        return driver_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setDriver_id(Long driver_id) {
-        this.driver_id = driver_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -34,28 +44,36 @@ public class Driver {
         this.name = name;
     }
 
-    public String getLicense_number() {
-        return license_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setLicense_number(String license_number) {
-        this.license_number = license_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getLicenseNumber() {
+        return licenseNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 
-    public String getEmail() {
-        return email;
+    public String getVehicleNumber() {
+        return vehicleNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
     }
 
     public String getStatus() {

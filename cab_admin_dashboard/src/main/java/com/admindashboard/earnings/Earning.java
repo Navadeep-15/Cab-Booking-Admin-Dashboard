@@ -4,51 +4,66 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "payments")
+@Table(name = "payment")
 public class Earning {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long payment_id;
+    private Long id;
 
-    private Long ride_id;
-    private Long user_id;
-    private Long driver_id;
+    @Column(name = "ride_id")
+    private Long rideId;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "driver_id")
+    private Long driverId;
+
+    @Column(name = "amount")
     private Double amount;
-    private LocalDateTime payment_time;
+
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
+    @Column(name = "payment_status")
+    private String paymentStatus;
+
+    @Column(name = "payment_date")
+    private LocalDateTime paymentDate;
 
     // Getters and Setters
 
-    public Long getPayment_id() {
-        return payment_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setPayment_id(Long payment_id) {
-        this.payment_id = payment_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getRide_id() {
-        return ride_id;
+    public Long getRideId() {
+        return rideId;
     }
 
-    public void setRide_id(Long ride_id) {
-        this.ride_id = ride_id;
+    public void setRideId(Long rideId) {
+        this.rideId = rideId;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Long getDriver_id() {
-        return driver_id;
+    public Long getDriverId() {
+        return driverId;
     }
 
-    public void setDriver_id(Long driver_id) {
-        this.driver_id = driver_id;
+    public void setDriverId(Long driverId) {
+        this.driverId = driverId;
     }
 
     public Double getAmount() {
@@ -59,11 +74,27 @@ public class Earning {
         this.amount = amount;
     }
 
-    public LocalDateTime getPayment_time() {
-        return payment_time;
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public void setPayment_time(LocalDateTime payment_time) {
-        this.payment_time = payment_time;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public LocalDateTime getPaymentDate() {
+        return paymentDate;
+    }
+
+    public void setPaymentDate(LocalDateTime paymentDate) {
+        this.paymentDate = paymentDate;
     }
 }

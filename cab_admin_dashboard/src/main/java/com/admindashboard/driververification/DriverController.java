@@ -18,18 +18,24 @@ public class DriverController {
         return driverService.getAllDrivers();
     }
 
-    @GetMapping("/pending")
-    public List<Driver> getPendingDrivers() {
-        return driverService.getPendingDrivers();
+    @GetMapping("/{id}")
+    public ResponseEntity<Driver> getDriverById(@PathVariable Long id) {
+        return ResponseEntity.ok(driverService.getDriverById(id));
     }
 
-    @PutMapping("/{id}/approve")
-    public ResponseEntity<Driver> approveDriver(@PathVariable Long id) {
-        return ResponseEntity.ok(driverService.approveDriver(id));
+    @PostMapping
+    public ResponseEntity<Driver> createDriver(@RequestBody Driver driver) {
+        return ResponseEntity.ok(driverService.createDriver(driver));
     }
 
-    @PutMapping("/{id}/reject")
-    public ResponseEntity<Driver> rejectDriver(@PathVariable Long id) {
-        return ResponseEntity.ok(driverService.rejectDriver(id));
+    @PutMapping("/{id}")
+    public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @RequestBody Driver driver) {
+        return ResponseEntity.ok(driverService.updateDriver(id, driver));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDriver(@PathVariable Long id) {
+        driverService.deleteDriver(id);
+        return ResponseEntity.noContent().build();
     }
 }
