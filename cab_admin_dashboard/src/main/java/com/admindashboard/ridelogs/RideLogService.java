@@ -11,13 +11,12 @@ public class RideLogService {
     @Autowired
     private RideLogRepository rideLogRepository;
 
-    public List<RideLog> getAllRideLogs() {
+    public List<RideLog> getAllRides() {
         return rideLogRepository.findAll();
     }
 
-    public RideLog getRideLogById(Long id) {
-        return rideLogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ride not found with ID: " + id));
+    public RideLog getRideById(Long id) {
+        return rideLogRepository.findById(id).orElse(null);
     }
 
     public List<RideLog> getCancelledRides() {
@@ -28,7 +27,18 @@ public class RideLogService {
         return rideLogRepository.findByComplaintIsNotNull();
     }
 
-    public RideLog addRideLog(RideLog rideLog) {
-        return rideLogRepository.save(rideLog);
+    public RideLog updateRide(Long id, RideLog ride) {
+        RideLog existing = getRideById(id);
+        if (existing != null) {
+            existing.setStatus(ride.getStatus());
+            existing.setFeedback(ride.getFeedback());
+            existing.setComplaint(ride.getComplaint());
+            return rideLogRepository.save(existing);
+        }
+        return null;
+    }
+
+    public void deleteRide(Long id) {
+        rideLogRepository.deleteById(id);
     }
 }

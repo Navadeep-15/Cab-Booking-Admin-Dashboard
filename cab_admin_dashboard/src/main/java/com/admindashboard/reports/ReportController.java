@@ -18,6 +18,12 @@ public class ReportController {
         return reportService.getAllReports();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Report> getReportById(@PathVariable Long id) {
+        Report report = reportService.getReportById(id);
+        return report != null ? ResponseEntity.ok(report) : ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/type/{type}")
     public List<Report> getReportsByType(@PathVariable String type) {
         return reportService.getReportsByType(type);
@@ -26,5 +32,11 @@ public class ReportController {
     @PostMapping
     public ResponseEntity<Report> createReport(@RequestBody Report report) {
         return ResponseEntity.ok(reportService.createReport(report));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReport(@PathVariable Long id) {
+        reportService.deleteReport(id);
+        return ResponseEntity.noContent().build();
     }
 }

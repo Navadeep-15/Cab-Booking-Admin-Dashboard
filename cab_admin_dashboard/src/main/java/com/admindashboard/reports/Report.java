@@ -1,7 +1,7 @@
 package com.admindashboard.reports;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reports")
@@ -9,34 +9,28 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reportId;
+    private Long report_id;
 
-    private String type; // e.g., complaint, payment, performance
+    private String report_type; // e.g., "complaint", "payment", "performance"
     private String description;
-    private LocalDate date;
+    private LocalDateTime generated_at;
 
-    public Report() {}
+    // Getters and Setters
 
-    public Report(String type, String description, LocalDate date) {
-        this.type = type;
-        this.description = description;
-        this.date = date;
+    public Long getReport_id() {
+        return report_id;
     }
 
-    public Long getReportId() {
-        return reportId;
+    public void setReport_id(Long report_id) {
+        this.report_id = report_id;
     }
 
-    public void setReportId(Long reportId) {
-        this.reportId = reportId;
+    public String getReport_type() {
+        return report_type;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setReport_type(String report_type) {
+        this.report_type = report_type;
     }
 
     public String getDescription() {
@@ -47,11 +41,11 @@ public class Report {
         this.description = description;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getGenerated_at() {
+        return generated_at;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setGenerated_at(LocalDateTime generated_at) {
+        this.generated_at = generated_at;
     }
 }

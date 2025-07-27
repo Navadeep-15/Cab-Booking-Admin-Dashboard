@@ -8,26 +8,22 @@ public class Driver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long driverId;
+    private Long driver_id;
 
     private String name;
-    private String licenseNumber;
+    private String license_number;
+    private String phone_number;
+    private String email;
     private String status; // pending, approved, rejected
 
-    public Driver() {}
+    // Getters and Setters
 
-    public Driver(String name, String licenseNumber, String status) {
-        this.name = name;
-        this.licenseNumber = licenseNumber;
-        this.status = status;
+    public Long getDriver_id() {
+        return driver_id;
     }
 
-    public Long getDriverId() {
-        return driverId;
-    }
-
-    public void setDriverId(Long driverId) {
-        this.driverId = driverId;
+    public void setDriver_id(Long driver_id) {
+        this.driver_id = driver_id;
     }
 
     public String getName() {
@@ -38,12 +34,28 @@ public class Driver {
         this.name = name;
     }
 
-    public String getLicenseNumber() {
-        return licenseNumber;
+    public String getLicense_number() {
+        return license_number;
     }
 
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
+    public void setLicense_number(String license_number) {
+        this.license_number = license_number;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getStatus() {

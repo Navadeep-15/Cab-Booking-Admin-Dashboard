@@ -23,15 +23,13 @@ public class DriverController {
         return driverService.getPendingDrivers();
     }
 
-    @PostMapping("/{id}/approve")
+    @PutMapping("/{id}/approve")
     public ResponseEntity<Driver> approveDriver(@PathVariable Long id) {
-        Driver approved = driverService.approveDriver(id);
-        return approved != null ? ResponseEntity.ok(approved) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(driverService.approveDriver(id));
     }
 
-    @PostMapping("/{id}/reject")
+    @PutMapping("/{id}/reject")
     public ResponseEntity<Driver> rejectDriver(@PathVariable Long id) {
-        Driver rejected = driverService.rejectDriver(id);
-        return rejected != null ? ResponseEntity.ok(rejected) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(driverService.rejectDriver(id));
     }
 }

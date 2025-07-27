@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -20,17 +20,13 @@ public class EarningController {
         return earningService.getAllEarnings();
     }
 
-    @GetMapping("/between")
-    public List<Earning> getEarningsBetween(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-        return earningService.getEarningsBetween(start, end);
-    }
-
-    @GetMapping("/total")
-    public ResponseEntity<Double> getTotalEarningsBetween(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-        return ResponseEntity.ok(earningService.getTotalEarningsBetween(start, end));
+    @GetMapping("/range")
+    public ResponseEntity<Double> getEarningsInRange(
+            @RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+        
+        List<Earning> earnings = earningService.getEarningsBetween(start, end);
+        Double total = earningService.calculateTotalEarnings(earnings);
+        return ResponseEntity.ok(total);
     }
 }

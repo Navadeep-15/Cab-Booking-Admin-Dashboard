@@ -15,12 +15,13 @@ public class RideLogController {
 
     @GetMapping
     public List<RideLog> getAllRides() {
-        return rideLogService.getAllRideLogs();
+        return rideLogService.getAllRides();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RideLog> getRideById(@PathVariable Long id) {
-        return ResponseEntity.ok(rideLogService.getRideLogById(id));
+        RideLog ride = rideLogService.getRideById(id);
+        return ride != null ? ResponseEntity.ok(ride) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/cancelled")
@@ -33,8 +34,15 @@ public class RideLogController {
         return rideLogService.getComplaints();
     }
 
-    @PostMapping
-    public ResponseEntity<RideLog> addRide(@RequestBody RideLog rideLog) {
-        return ResponseEntity.ok(rideLogService.addRideLog(rideLog));
+    @PutMapping("/{id}")
+    public ResponseEntity<RideLog> updateRide(@PathVariable Long id, @RequestBody RideLog ride) {
+        RideLog updated = rideLogService.updateRide(id, ride);
+        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRide(@PathVariable Long id) {
+        rideLogService.deleteRide(id);
+        return ResponseEntity.noContent().build();
     }
 }

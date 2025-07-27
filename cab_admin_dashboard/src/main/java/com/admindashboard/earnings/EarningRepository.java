@@ -1,14 +1,12 @@
 package com.admindashboard.earnings;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import java.time.LocalDate;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Repository
 public interface EarningRepository extends JpaRepository<Earning, Long> {
-
-    List<Earning> findByDateBetween(LocalDate start, LocalDate end);
-
-    @Query("SELECT SUM(e.amount) FROM Earning e WHERE e.date BETWEEN :start AND :end")
-    Double findTotalEarningsBetween(LocalDate start, LocalDate end);
+    List<Earning> findByPayment_timeBetween(LocalDateTime start, LocalDateTime end);
 }
