@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ridelogs")
+@RequestMapping("/api/rides")
 public class RideLogController {
 
     @Autowired
@@ -20,22 +20,7 @@ public class RideLogController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RideLog> getRideById(@PathVariable Long id) {
-        return ResponseEntity.ok(rideLogService.getRideById(id));
-    }
-
-    @PostMapping
-    public ResponseEntity<RideLog> createRide(@RequestBody RideLog rideLog) {
-        return ResponseEntity.ok(rideLogService.createRide(rideLog));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<RideLog> updateRide(@PathVariable Long id, @RequestBody RideLog rideLog) {
-        return ResponseEntity.ok(rideLogService.updateRide(id, rideLog));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRide(@PathVariable Long id) {
-        rideLogService.deleteRide(id);
-        return ResponseEntity.noContent().build();
+        RideLog ride = rideLogService.getRideById(id);
+        return ride != null ? ResponseEntity.ok(ride) : ResponseEntity.notFound().build();
     }
 }

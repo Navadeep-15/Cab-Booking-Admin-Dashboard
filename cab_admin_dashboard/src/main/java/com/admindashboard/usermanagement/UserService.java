@@ -2,6 +2,7 @@ package com.admindashboard.usermanagement;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -15,27 +16,23 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        return userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+        return userRepository.findById(id).orElse(null);
     }
 
-    public User createUser(User user) {
+    public User addUser(User user) {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User userDetails) {
+    public User updateUser(Long id, User updatedUser) {
         User user = getUserById(id);
-        user.setEmail(userDetails.getEmail());
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setPassword(userDetails.getPassword());
-        user.setPhoneNumber(userDetails.getPhoneNumber());
-        user.setRole(userDetails.getRole());
-        user.setProfileImage(userDetails.getProfileImage());
-        user.setIsVerified(userDetails.getIsVerified());
-        user.setIsActive(userDetails.getIsActive());
-        user.setUpdatedAt(userDetails.getUpdatedAt());
-        return userRepository.save(user);
+        if (user != null) {
+            user.setName(updatedUser.getName());
+            user.setEmail(updatedUser.getEmail());
+            user.setPhone(updatedUser.getPhone());
+            user.setPassword(updatedUser.getPassword());
+            return userRepository.save(user);
+        }
+        return null;
     }
 
     public void deleteUser(Long id) {

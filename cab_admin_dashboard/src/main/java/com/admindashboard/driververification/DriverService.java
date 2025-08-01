@@ -16,26 +16,24 @@ public class DriverService {
     }
 
     public Driver getDriverById(Long id) {
-        return driverRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Driver not found with ID: " + id));
+        return driverRepository.findById(id).orElse(null);
     }
 
-    public Driver createDriver(Driver driver) {
-        return driverRepository.save(driver);
-    }
-
-    public Driver updateDriver(Long id, Driver updatedDriver) {
+    public Driver approveDriver(Long id) {
         Driver driver = getDriverById(id);
-        driver.setName(updatedDriver.getName());
-        driver.setPhoneNumber(updatedDriver.getPhoneNumber());
-        driver.setLicenseNumber(updatedDriver.getLicenseNumber());
-        driver.setVehicleNumber(updatedDriver.getVehicleNumber());
-        driver.setVehicleType(updatedDriver.getVehicleType());
-        driver.setStatus(updatedDriver.getStatus());
-        return driverRepository.save(driver);
+        if (driver != null) {
+            driver.setStatus("approved");
+            return driverRepository.save(driver);
+        }
+        return null;
     }
 
-    public void deleteDriver(Long id) {
-        driverRepository.deleteById(id);
+    public Driver rejectDriver(Long id) {
+        Driver driver = getDriverById(id);
+        if (driver != null) {
+            driver.setStatus("rejected");
+            return driverRepository.save(driver);
+        }
+        return null;
     }
 }

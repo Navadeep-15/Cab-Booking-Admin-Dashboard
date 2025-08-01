@@ -20,22 +20,7 @@ public class EarningController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Earning> getEarningById(@PathVariable Long id) {
-        return ResponseEntity.ok(earningService.getEarningById(id));
-    }
-
-    @PostMapping
-    public ResponseEntity<Earning> createEarning(@RequestBody Earning earning) {
-        return ResponseEntity.ok(earningService.createEarning(earning));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Earning> updateEarning(@PathVariable Long id, @RequestBody Earning earning) {
-        return ResponseEntity.ok(earningService.updateEarning(id, earning));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEarning(@PathVariable Long id) {
-        earningService.deleteEarning(id);
-        return ResponseEntity.noContent().build();
+        Earning earning = earningService.getEarningById(id);
+        return earning != null ? ResponseEntity.ok(earning) : ResponseEntity.notFound().build();
     }
 }
