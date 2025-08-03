@@ -15,27 +15,32 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public User getUserById(Integer id) {
+        return userRepository.findById(id)
+                .orElse(null); // returns null if user not found
     }
 
     public User addUser(User user) {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User updatedUser) {
-        User user = getUserById(id);
-        if (user != null) {
-            user.setName(updatedUser.getName());
-            user.setEmail(updatedUser.getEmail());
-            user.setPhone(updatedUser.getPhone());
-            user.setPassword(updatedUser.getPassword());
-            return userRepository.save(user);
+    public User updateUser(Integer id, User updatedUser) {
+        User existingUser = getUserById(id);
+        if (existingUser != null) {
+            existingUser.setFirstName(updatedUser.getFirstName());
+            existingUser.setLastName(updatedUser.getLastName());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setProfilePictureUrl(updatedUser.getProfilePictureUrl());
+            existingUser.setUserType(updatedUser.getUserType());
+
+            return userRepository.save(existingUser);
         }
         return null;
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(Integer id) {
         userRepository.deleteById(id);
     }
 }
