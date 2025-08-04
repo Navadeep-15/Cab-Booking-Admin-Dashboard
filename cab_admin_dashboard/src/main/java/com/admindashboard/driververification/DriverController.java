@@ -19,20 +19,28 @@ public class DriverController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Driver> getDriver(@PathVariable Long id) {
-        Driver driver = driverService.getDriverById(id);
-        return driver != null ? ResponseEntity.ok(driver) : ResponseEntity.notFound().build();
+    public ResponseEntity<Driver> getDriverById(@PathVariable Integer id) {
+        return ResponseEntity.ok(driverService.getDriverById(id));
     }
 
-    @PutMapping("/{id}/approve")
-    public ResponseEntity<Driver> approveDriver(@PathVariable Long id) {
-        Driver approved = driverService.approveDriver(id);
-        return approved != null ? ResponseEntity.ok(approved) : ResponseEntity.notFound().build();
+    @GetMapping("/status/{status}")
+    public List<Driver> getDriversByStatus(@PathVariable String status) {
+        return driverService.getDriversByVerificationStatus(status);
     }
 
-    @PutMapping("/{id}/reject")
-    public ResponseEntity<Driver> rejectDriver(@PathVariable Long id) {
-        Driver rejected = driverService.rejectDriver(id);
-        return rejected != null ? ResponseEntity.ok(rejected) : ResponseEntity.notFound().build();
+    @PostMapping
+    public ResponseEntity<Driver> addDriver(@RequestBody Driver driver) {
+        return ResponseEntity.ok(driverService.addDriver(driver));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Driver> updateDriver(@PathVariable Integer id, @RequestBody Driver driver) {
+        return ResponseEntity.ok(driverService.updateDriver(id, driver));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDriver(@PathVariable Integer id) {
+        driverService.deleteDriver(id);
+        return ResponseEntity.noContent().build();
     }
 }

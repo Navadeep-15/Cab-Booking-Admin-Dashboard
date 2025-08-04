@@ -2,5 +2,8 @@ package com.admindashboard.driververification;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DriverRepository extends JpaRepository<Driver, Long> {
+import java.util.List;
+
+public interface DriverRepository extends JpaRepository<Driver, Integer> {
+    List<Driver> findByVerificationStatus(String status);
 }

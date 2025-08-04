@@ -1,36 +1,38 @@
 package com.admindashboard.driververification;
 
+import com.admindashboard.usermanagement.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "drivers")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Driver {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long driverId;
+    @Column(name = "driver_id")
+    private Integer driverId;
 
-    private String name;
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "license_number", nullable = false, unique = true)
     private String licenseNumber;
-    private String email;
-    private String phone;
-    private String status; // pending, approved, rejected
 
-    // Getters and Setters
-    public Long getDriverId() { return driverId; }
-    public void setDriverId(Long driverId) { this.driverId = driverId; }
+    @Column(name = "vehicle_type")
+    private String vehicleType;
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    @Column(name = "license_expiry_date")
+    private LocalDate licenseExpiryDate;
 
-    public String getLicenseNumber() { return licenseNumber; }
-    public void setLicenseNumber(String licenseNumber) { this.licenseNumber = licenseNumber; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    @Column(name = "verification_status")
+    private String verificationStatus; // e.g., PENDING, VERIFIED, REJECTED
 }
