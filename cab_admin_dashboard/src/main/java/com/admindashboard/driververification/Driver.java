@@ -1,6 +1,5 @@
 package com.admindashboard.driververification;
 
-import com.admindashboard.usermanagement.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +19,6 @@ public class Driver {
     @Column(name = "driver_id")
     private Integer driverId;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private User user;
-
     @Column(name = "license_number", nullable = false, unique = true)
     private String licenseNumber;
 
@@ -34,5 +29,5 @@ public class Driver {
     private LocalDate licenseExpiryDate;
 
     @Column(name = "verification_status")
-    private String verificationStatus; // e.g., PENDING, VERIFIED, REJECTED
+    private String verificationStatus;
 }

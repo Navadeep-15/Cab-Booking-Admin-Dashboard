@@ -42,14 +42,15 @@ public class User {
     @Column(name = "user_type", nullable = false)
     private UserType userType;
 
+    @OneToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Driver driver;
 
     @PrePersist
     protected void onCreate() {

@@ -1,10 +1,11 @@
 package com.admindashboard.usermanagement;
 
+import com.admindashboard.driververification.Driver;
+import com.admindashboard.driververification.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -12,36 +13,28 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private DriverRepository driverRepository;
+
+    public User createUser(User user) {
+        if (user.getDriver() != null && user.getDriver().getDriverId() != null) {
+            Driver driver = driverRepository.findById(user.getDriver().getDriverId())
+                    .orElseThrow(() -> new RuntimeException("Driver not found"));
+            user.setDriver(driver);
+        }
+        return userRepository.save(user);
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(Integer id) {
-        return userRepository.findById(id);
+    public User getUserById(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
-
-    public User updateUser(Integer id, User updatedUser) {
-        return userRepository.findById(id).map(existingUser -> {
-            existingUser.setFirstName(updatedUser.getFirstName());
-            existingUser.setLastName(updatedUser.getLastName());
-            existingUser.setEmail(updatedUser.getEmail());
-            existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
-            existingUser.setPassword(updatedUser.getPassword());
-            existingUser.setUserType(updatedUser.getUserType());
-            existingUser.setProfilePictureUrl(updatedUser.getProfilePictureUrl());
-            return userRepository.save(existingUser);
-        }).orElse(null);
-    }
-
-    public boolean deleteUser(Integer id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void deleteUser(Integer id) {
+        userRepository.deleteById(id);
     }
 }
